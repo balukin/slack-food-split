@@ -32,8 +32,8 @@ namespace FoodSplitApp.Services
                 DateCreated = DateTimeOffset.UtcNow
             };
 
-            var anyOtherOrder = await storage.GetOrder();
-            if (anyOtherOrder != null)
+            var currentOrder = await storage.GetOrder();
+            if (currentOrder != null && currentOrder.IsOpen)
             {
                 throw new BadRequestException("There is already an open order. Cancel it first.");
             }

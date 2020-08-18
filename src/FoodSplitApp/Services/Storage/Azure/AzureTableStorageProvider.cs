@@ -19,7 +19,7 @@ namespace FoodSplitApp.Services.Storage
 
         private string PartitionBalanceKey => $"Balance-{context.TeamId}";
 
-        private const string OpenOrderRowKey = "open";
+        private const string CurrentOrderRowKey = "order";
 
         private const string BalanceBookRowKey = "balance_book";
 
@@ -30,7 +30,7 @@ namespace FoodSplitApp.Services.Storage
 
         public async Task<Order> GetOrder()
         {
-            var order = await Retrieve<TableEntity<Order>>(PartitionOrderKey, "open");
+            var order = await Retrieve<TableEntity<Order>>(PartitionOrderKey, CurrentOrderRowKey);
             return order?.Entity;
         }
 
@@ -43,7 +43,7 @@ namespace FoodSplitApp.Services.Storage
 
         public async Task DeleteOrder()
         {
-            var order = await Retrieve<TableEntity<Order>>(PartitionOrderKey, "open");
+            var order = await Retrieve<TableEntity<Order>>(PartitionOrderKey, CurrentOrderRowKey);
 
             if (order != null)
             {
@@ -79,7 +79,7 @@ namespace FoodSplitApp.Services.Storage
             var entity = new TableEntity<Order>(order)
             {
                 PartitionKey = PartitionOrderKey,
-                RowKey = OpenOrderRowKey,
+                RowKey = CurrentOrderRowKey,
                 Timestamp = DateTimeOffset.UtcNow,
                 ETag = "*"
             };
