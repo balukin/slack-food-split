@@ -26,7 +26,7 @@ namespace FoodSplitApp.Services
         {
             var order = new Order()
             {
-                Owner = host,
+                Owner = new FoodUser(host),
                 Costs = new Dictionary<string, Cost>(),
                 Id = Guid.NewGuid().ToString()
             };
@@ -123,7 +123,7 @@ namespace FoodSplitApp.Services
             return await storage.GetBalanceBook();
         }
 
-        public async Task CancelOpenOrder()
+        public async Task CancelOpenOrder(FoodUser caller)
 
         {
             var order = await storage.GetOrder();
@@ -151,15 +151,14 @@ namespace FoodSplitApp.Services
             }
 
             var balanceBook = await storage.GetBalanceBook();
-            var host = new FoodUser(order.Owner);
             var sharedPart = order.SharedCost / order.Costs.Count;
 
-            foreach (var cost in order.Costs.Values.Where(cost => cost.DebtorId != host.UniqueId))
+            foreach (var cost in order.Costs.Values.Where(cost => cost.DebtorId != order.Owner.UniqueId))
             {
                 var eater = new FoodUser(cost.DebtorId, cost.DebtorName);
                 var addedDebt = cost.Value + sharedPart;
 
-                balanceBook.AddDebt(eater, host, addedDebt);
+                balanceBook.AddDebt(eater, order.Owner, addedDebt);
             }
 
             order.DateClosed = DateTimeOffset.UtcNow;
@@ -180,15 +179,14 @@ namespace FoodSplitApp.Services
             }
 
             var balanceBook = await storage.GetBalanceBook();
-            var host = new FoodUser(order.Owner);
             var sharedPart = order.SharedCost / order.Costs.Count;
 
-            foreach (var cost in order.Costs.Values.Where(cost => cost.DebtorId != host.UniqueId))
+            foreach (var cost in order.Costs.Values.Where(cost => cost.DebtorId != order.Owner.UniqueId))
             {
                 var eater = new FoodUser(cost.DebtorId, cost.DebtorName);
                 var addedDebt = cost.Value + sharedPart;
 
-                balanceBook.AddDebt(host, eater, addedDebt);
+                balanceBook.AddDebt(order.Owner, eater, addedDebt);
             }
 
             order.DateClosed = null;

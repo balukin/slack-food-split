@@ -14,7 +14,7 @@ namespace FoodSplitApp.Model.Orders
     {
         public string Id { get; set; }
 
-        public SlackUser Owner { get; set; }
+        public FoodUser Owner { get; set; }
 
         public DateTimeOffset? DateClosed { get; set; }
 

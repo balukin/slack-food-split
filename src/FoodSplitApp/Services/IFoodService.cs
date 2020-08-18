@@ -21,7 +21,7 @@ namespace FoodSplitApp.Services
         /// <param name="orderId">Order id to be finished.</param>
         Task<(Order finishedOrder, BalanceBook updatedBalance)> FinishOrder();
 
-        Task CancelOpenOrder();
+        Task CancelOpenOrder(FoodUser caller);
 
         Task<(Order reopenedOrder, BalanceBook updatedBalance)> ReopenOrder();
 

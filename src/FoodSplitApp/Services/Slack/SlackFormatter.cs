@@ -59,8 +59,8 @@ namespace FoodSplitApp.Services.Slack
             };
 
             var payload = order.IsOpen
-                ? new Markdown($":hourglass_flowing_sand: Order in progress by {order.Owner.Username}:\n")
-                : new Markdown($":checkered_flag: Order complete by {order.Owner.Username}:\n");
+                ? new Markdown($":hourglass_flowing_sand: Order in progress by {order.Owner.FriendlyName}:\n")
+                : new Markdown($":checkered_flag: Order complete by {order.Owner.FriendlyName}:\n");
 
             if (order.Costs != null)
             {

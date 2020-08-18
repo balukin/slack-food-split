@@ -112,7 +112,7 @@ namespace FoodSplitApp.Services.Slack
         /// </summary>
         private async Task HandleCancelLastOrderAction(SlashCommand command)
         {
-            await foodService.CancelOpenOrder();
+            await foodService.CancelOpenOrder(new FoodUser(context.Caller));
             await SendPublicResponse(command, $"Order canceled by {command.UserName}.");
         }
 
