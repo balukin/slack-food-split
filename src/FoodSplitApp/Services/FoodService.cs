@@ -28,7 +28,8 @@ namespace FoodSplitApp.Services
             {
                 Owner = new FoodUser(host),
                 Costs = new Dictionary<string, Cost>(),
-                Id = Guid.NewGuid().ToString()
+                Id = Guid.NewGuid().ToString(),
+                DateCreated = DateTimeOffset.UtcNow
             };
 
             var anyOtherOrder = await storage.GetOrder();
@@ -130,6 +131,13 @@ namespace FoodSplitApp.Services
             if (order == null || !order.IsOpen)
             {
                 throw new BadRequestException("There is no valid order to cancel.");
+            }
+
+            const int minTimeout = 30;
+            if (caller.UniqueId != order.Owner.UniqueId &&
+                DateTimeOffset.UtcNow - order.DateCreated < TimeSpan.FromMinutes(minTimeout))
+            {
+                throw new BadRequestException($"Only order owner can cancel the order during first {minTimeout} minutes.");
             }
 
             await storage.DeleteOrder();

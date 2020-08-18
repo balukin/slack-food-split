@@ -16,6 +16,8 @@ namespace FoodSplitApp.Model.Orders
 
         public FoodUser Owner { get; set; }
 
+        public DateTimeOffset DateCreated { get; set; }
+
         public DateTimeOffset? DateClosed { get; set; }
 
         public decimal SharedCost { get; set; }
