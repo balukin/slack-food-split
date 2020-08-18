@@ -34,7 +34,9 @@ namespace FoodSplitApp
             [Table("FoodTable")] CloudTable table)
         {
             ExecutionContext.TableStorage = table;
-            return await requestHandler.HandleSlashCommandRequest(req, endpointConfig);
+            await requestHandler.HandleSlashCommandRequest(req, endpointConfig);
+
+            return new OkResult();
         }
     }
 }
