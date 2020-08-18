@@ -54,6 +54,11 @@ namespace FoodSplitApp.Services
                 throw new BadRequestException("There is no order open.");
             }
 
+            if (!order.IsOpen)
+            {
+                throw new BadRequestException("Order is closed and cannot be altered.");
+            }
+
             order.Costs[eater.UniqueId] = new Cost
             {
                 DebtorId = eater.UniqueId,
@@ -77,6 +82,11 @@ namespace FoodSplitApp.Services
             if (order == null)
             {
                 throw new BadRequestException("There is no order open.");
+            }
+
+            if (!order.IsOpen)
+            {
+                throw new BadRequestException("Order is closed and cannot be altered.");
             }
 
             order.SharedCost = value;
