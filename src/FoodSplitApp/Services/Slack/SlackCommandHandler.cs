@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using FoodSplitApp.Errors;
@@ -9,6 +10,7 @@ using FoodSplitApp.Model;
 using Microsoft.AspNetCore.Mvc.WebApiCompatShim;
 using Microsoft.Extensions.Logging;
 using SlackNet;
+using SlackNet.AspNetCore;
 using SlackNet.Blocks;
 using SlackNet.Interaction;
 using SlackNet.WebApi;

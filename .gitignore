@@ -266,3 +266,6 @@ __pycache__/
 .vs/
 .suo
 /src/FoodSplitApp/Properties/serviceDependencies.local.json
+/src/FoodSplitApp/Properties/ServiceDependencies
+/src/FoodSplitApp/Properties/PublishProfiles
+/src/FoodSplitApp/Properties/serviceDependencies.FoodSplitApp - Zip Deploy1.json
